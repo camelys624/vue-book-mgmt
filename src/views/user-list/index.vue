@@ -160,10 +160,6 @@ export default {
       this.fetchData()
     },
     handleOpenDialog(row) {
-      if (this.$refs['ruleForm']) {
-        this.$refs['ruleForm'].resetFields()
-      }
-
       if (row) {
         this.userForm = { ...row }
       } else {
@@ -176,6 +172,10 @@ export default {
       }
 
       this.dialogVisible = true
+
+      this.$nextTick(() => {
+        this.$refs['ruleForm'].resetFields()
+      })
     },
     handleAdd() {
       this.$refs['ruleForm'].validate(valid => {

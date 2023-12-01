@@ -103,7 +103,7 @@
       :visible.sync="dialogVisible"
       width="70%"
     >
-      <el-form :model="bookForm" :rules="rules" label-width="120px">
+      <el-form ref="ruleForm" :model="bookForm" :rules="rules" label-width="120px">
         <el-form-item label="ISBN" prop="isbn">
           <el-input v-model="bookForm.isbn" />
         </el-form-item>
@@ -238,10 +238,6 @@ export default {
       })
     },
     handleAdd() {
-      if (this.$refs['ruleForm']) {
-        this.$refs['ruleForm'].resetFields()
-      }
-
       this.bookForm = {
         isbn: '',
         bookName: '',
@@ -254,14 +250,18 @@ export default {
       }
 
       this.dialogVisible = true
+
+      this.$nextTick(() => {
+        this.$refs['ruleForm'].resetFields()
+      })
     },
     handleEdit(row) {
-      if (this.$refs['ruleForm']) {
-        this.$refs['ruleForm'].resetFields()
-      }
       this.bookForm = { ...row }
       this.dialogVisible = true
-      
+
+      this.$nextTick(() => {
+        this.$refs['ruleForm'].resetFields()
+      })
     },
     handleBorrow({ id }) {
     },
