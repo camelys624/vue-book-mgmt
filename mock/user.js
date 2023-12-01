@@ -1,3 +1,4 @@
+const Mock = require('mockjs')
 
 const tokens = {
   admin: {
@@ -22,6 +23,15 @@ const users = {
     name: 'Normal Editor'
   }
 }
+
+const data = Mock.mock({
+  'items|10': [{
+    id: '@id',
+    name: 'name',
+    role: 'role',
+    date: '@datetime'
+  }]
+})
 
 module.exports = [
   // user login
@@ -66,6 +76,20 @@ module.exports = [
       return {
         code: 20000,
         data: info
+      }
+    }
+  },
+  {
+    url: '/vue-admin-template/users',
+    type: 'get',
+    response: config => {
+      const items = data.items
+      return {
+        code: 20000,
+        data: {
+          total: items.length,
+          items: items
+        }
       }
     }
   },
