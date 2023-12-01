@@ -160,7 +160,10 @@ export default {
       this.fetchData()
     },
     handleOpenDialog(row) {
-      this.$refs['ruleForm'].resetFields()
+      if (this.$refs['ruleForm']) {
+        this.$refs['ruleForm'].resetFields()
+      }
+
       if (row) {
         this.userForm = { ...row }
       } else {

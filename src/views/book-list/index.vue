@@ -3,14 +3,14 @@
     <el-form :model="searchForm" inline>
       <el-form-item label="书名">
         <el-input
-          v-model="searchForm.searchText"
+          v-model="searchForm.bookName"
           placeholder="请输入书名"
           @keyup.enter.native="search"
         />
       </el-form-item>
       <el-form-item label="ISBN">
         <el-input
-          v-model="searchForm.searchISBN"
+          v-model="searchForm.isbn"
           placeholder="请输入ISBN"
           @keyup.enter.native="search"
         />
@@ -166,8 +166,8 @@ export default {
 
     return {
       searchForm: {
-        searchText: '',
-        searchISBN: '',
+        bookName: '',
+        isbn: '',
         type: ''
       },
       loading: false,
@@ -228,8 +228,8 @@ export default {
       getList({
         pageNum: this.pageInfo.pageNum,
         pageSize: this.pageInfo.pageSize,
-        searchText: this.searchText,
-        searchISBN: this.searchISBN,
+        bookName: this.bookName,
+        isbn: this.isbn,
         type: this.type
       }).then(response => {
         this.tableData = response.data.items
@@ -238,7 +238,10 @@ export default {
       })
     },
     handleAdd() {
-      this.$refs['ruleForm'].resetFields()
+      if (this.$refs['ruleForm']) {
+        this.$refs['ruleForm'].resetFields()
+      }
+
       this.bookForm = {
         isbn: '',
         bookName: '',
@@ -253,9 +256,12 @@ export default {
       this.dialogVisible = true
     },
     handleEdit(row) {
-      this.$refs['ruleForm'].resetFields()
+      if (this.$refs['ruleForm']) {
+        this.$refs['ruleForm'].resetFields()
+      }
       this.bookForm = { ...row }
       this.dialogVisible = true
+      
     },
     handleBorrow({ id }) {
     },
